@@ -16,6 +16,7 @@
 	<script type="text/javascript" src="./js/web3.min.js"></script>
 	<script type="text/javascript" src="./js/ethereumjs-tx-1.3.3.min.js"></script>
 	<script src="http://code.jquery.com/jquery-latest.js "></script>
+	<script type="text/javascript" src="./js/qrcode.js"></script>
 
 	<!-- bootsrtap CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -35,6 +36,27 @@
 				console.log("Ropsten Ethereum API version : ", version);
 				console.log("web3: ", web3);
 			}
+			
+			 let qrcode = new QRCode(document.getElementById("qrcode"), {
+				width : 250,
+				height : 250
+			 });
+			
+			function makeCode () {		
+				let elText = document.getElementById("fromaddress");
+				
+				if (!elText.value) {
+					alert("Input a text");
+					elText.focus();
+					return;
+				}
+				qrcode.makeCode(elText.value);
+			 } 
+			
+			$('#qrcodeBtn').on('click', function(){
+				if (DEBUG) console.log("qrcodeBtn...... ");
+				   makeCode();   
+			}) // end of txbuilder
 			
 			$('#send').on('click', async function () {
 			
@@ -117,6 +139,8 @@
 		<button id="newAccount"> 계정생성 </button>
 		<button id="getBalance"> 잔액조회 </button>
 		<button id="send"> 전송 </button>
+		<!--qr코드 버튼 추가-->
+		<button id="qrcodeBtn"> Create QRCode </button>
 		<!--value : 이더리움 키 notpad-->
 		<h5>송신처 <input id="fromaddress" size="45" value="0xa4A1E0b99cFFf823eef74665CD26871496619175" placeholder="보내는 계좌번호"></input> </h5> 
 		<h5>수신처 <input id="toaddress" size="45" placeholder="받는 계좌번호"></input> </h5> 
@@ -129,6 +153,8 @@
 	<div class="container " role="main">
 		<h4><strong> Message </strong></h4>
 		<div id="message"></div>
+		<!--qr코드 사이즈 지정-->
+		<div id="qrcode" style="width:250px; height:250px; margin-top:15px;"></div>
 	</div>
 	<hr>
 	<footer class="py-5 bg-dark">
