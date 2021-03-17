@@ -1,0 +1,71 @@
+<!-- 
+ index.html - Ethereum Wallet
+ Author : Soto Jang (sotolabedu@gmail.com)
+ Copyright (c) 2020 Sunstar. All Rights Reserved. See LICENSE file.
+ -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Instascan</title>
+    <script type="text/javascript" src="./js/instascan.min.js"></script>
+	<script src="http://code.jquery.com/jquery-latest.js "></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+		
+		scanner.addListener('scan', function (content) {
+                      console.log(content);
+			$('#message').text( content );
+			
+			
+			// $('#fromaddress').val(privateKey);
+			// <input id="myField" type="text" name="email"/>
+      			// getting the value
+     		       // let fromaddress = $("#fromaddress").val();
+                       // setting the value
+                       // $("#fromaddress").val( "new value here" );
+                       // <h5>송신처  <input id="fromaddress" size="45" placeholder=""></input> </h5>
+			
+			// let obj = JSON.parse(content);
+			// alert("Account 입력이 됐습니다...!!!" + account );
+			// console.log("obj: ", obj);
+			// let account = obj.account.toString();
+			// let passwd = obj.passwd.toString();
+			
+			// $('#i_address').val(account);
+			// console.log("account: ", account);
+			// console.log("passwd: ", passwd);
+			
+			
+			// var toString = product.toString();
+		        // console.log("product: " + toString);
+			// var strArray = toString.split(",");
+			// var address = strArray[0];
+			// var privatekey = strArray[1];
+			
+		});
+		
+		Instascan.Camera.getCameras().then(function (cameras) {
+			if (cameras.length > 0) {
+				scanner.start(cameras[0]);
+			} else {
+			console.error('No cameras found.');
+			}
+		}).catch(function (e) {
+			console.error(e);
+		});
+	  });
+    </script>
+  </head>
+  <body>
+    <div class='col-md-5'>
+    <video id="preview"></video>
+    <h5>송신처  <input id="i_address" size="45" placeholder=""></input> </h5>
+    </div>
+    <div class="container " role="main">
+	<h4><strong> Message </strong></h4>
+    <div id="message"></div>
+  </div>
+  </body>
+</html>
